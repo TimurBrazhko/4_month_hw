@@ -16,4 +16,16 @@
     <a href="#" class="btn btn-primary">GO FUCK YOURE SELF GIGGANIGGA</a>
   </div>
 </div>
+<form action="" method="post">
+  {%csrf_token%}
+  {{form.as_p}}
+  <button type="submit">Add comment</button>
+</form>
+{%for comment in comments%}
+  <div style="background-color: #6f94c6;" class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">{{comment.text}}</h5>
+    </div>
+  </div>
+{%endfor%}
 {%endblock%}
