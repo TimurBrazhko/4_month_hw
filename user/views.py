@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from user.forms import RegisterForm, LoginForm
 from django.contrib.auth import authenticate, login, logout
 
+
 def register_view(request):
     if request.method == 'GET':
         form = RegisterForm()

@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from posts.models import Post
-from posts.forms import PostForm2, CommentForm
+from posts.forms import PostForm2, CommentForm, SearchForm
+from django.db.models import Q
 from posts.models import Comment
 from django.contrib.auth.decorators import login_required
+
 
 def test_view(request):
     return HttpResponse("Wassup")
@@ -15,8 +17,46 @@ def main_page_view(request):
 
 @login_required(login_url='login')
 def post_list_view(request):
-    posts = Post.objects.all()
-    return render(request, 'post/post_list.html', context={'posts': posts})
+    if request.method == 'GET':
+        form = SearchForm(request.GET)
+        posts = Post.objects.all()
+        search = request.GET.get('search')
+        tag = request.GET.getlist('tag')
+        ordering = request.GET.get('ordering')
+
+        if search:
+            posts = posts.filter(
+                Q(title__icontains=search) | Q(content__icontains=search)
+            )
+
+        if tag:
+            posts = posts.filter(tag__id__in=tag)
+
+        if ordering:
+            posts = posts.order_by(ordering)
+
+        page = request.GET.get('page', 1)
+        page = int(page)
+        limit = 3
+        total_posts = posts.count()
+        max_pages = (total_posts + limit - 1) // limit
+
+        if page < 1:
+            page = 1
+        elif page > max_pages:
+            page = max_pages
+        start = (page - 1) * limit
+        end = start + limit
+
+        posts = posts[start:end]
+
+        context = {
+            'posts': posts,
+            'form': form,
+            'max_pages': range(1, max_pages + 1),
+        }
+
+        return render(request, 'post/post_list.html', context=context)
 
 
 @login_required(login_url='login')

@@ -25,7 +25,7 @@ class Post(models.Model):
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, null=True, blank=True, related_name='posts'
     )
-    tag = models.ManyToManyField(Tag, null=True, blank=True)
+    tag = models.ManyToManyField(Tag, related_name='posts', null=True, blank=True)
 
     def __str__(self):
         return f"{self.title}"

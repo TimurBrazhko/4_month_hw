@@ -2,6 +2,10 @@
 {%load static%}
 
 {%block content%}
+<form action="" method="get">
+  {{form.as_p}}
+  <button type="submit">Search</button>
+</form>
 {%for post in posts%}
 <div class="card" style="width: 18rem;">
   {%if post.image%}
@@ -13,8 +17,22 @@
     <h5 class="card-title">{{post.title}}</h5>
     <p class="card-text">{{post.content}}</p>
     <p class="card-text">{{post.rate}}</p>
+    <ul class="list-group list-group-flush">
+      {%for tag in post.tag.all%}
+        <li class="list-group-item">{{ tag.name }}</li>
+      {%endfor%}
+    </ul>
     <a href="/posts/{{post.id}}/" class="btn btn-primary">GO FUCK YOURE SELF GIGGANIGGA</a>
   </div>
 </div>
 {%endfor%}
+<div style="display: flex; justify-content: center; margin-top: 20px; margin-bottom: 20px">
+{%for page in max_pages%}
+  {% if request.GET %}
+    <a class="btn btn-primary" href="{{request.get_full_path}}&page={{page}}">{{page}}</a>
+  {%else%}
+    <a class="btn btn-primary" href="{{request.get_full_path}}?page={{page}}">{{page}}</a>
+  {%endif%}
+{%endfor%}
+  </div>
 {%endblock%}
