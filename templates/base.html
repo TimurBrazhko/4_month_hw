@@ -17,20 +17,23 @@
         </li>
         {% if request.user.is_authenticated%}
         <li class="nav-item">
-          <a class="nav-link" href="/posts/">Posts</a>
+          <a class="nav-link" href="/api/v1/posts/posts/">Posts</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/posts/create/">Create Post</a>
+          <a class="nav-link" href="/api/v1/posts/posts/create/">Create Post</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/logout/">Logout</a>
+          <a class="nav-link" href="/api/v1/user/profile/">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/api/v1/user/logout/">Logout</a>
         </li>
         {%else%}
         <li class="nav-item">
-          <a class="nav-link" href="/login/">Login</a>
+          <a class="nav-link" href="/api/v1/user/login/">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/register/">Register</a>
+          <a class="nav-link" href="/api/v1/user/register/">Register</a>
         </li>
         {%endif%}
       <form class="d-flex" role="search">
