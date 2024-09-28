@@ -30,4 +30,5 @@ urlpatterns = [
     path('', main_page_view, name='main_page'),
     path('api/v1/posts/', include('posts.urls')),
     path('api/v1/user/', include('user.urls')),
+    path('api/v1/parsing/', include('parser.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
